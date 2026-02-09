@@ -7,6 +7,9 @@ import VagasPage from '@/components/pages/VagasPage';
 import VagaDetalhePage from '@/components/pages/VagaDetalhePage';
 import CandidatarPage from '@/components/pages/CandidatarPage';
 import EmpresasPage from '@/components/pages/EmpresasPage';
+import LoginPage from '@/components/pages/LoginPage';
+import ProfessionalPage from '@/components/pages/ProfessionalPage';
+import ContractorPage from '@/components/pages/ContractorPage';
 
 // Layout component that includes ScrollToTop
 function Layout() {
@@ -57,6 +60,27 @@ const router = createBrowserRouter([
         element: <EmpresasPage />,
         routeMetadata: {
           pageIdentifier: 'empresas',
+        },
+      },
+      {
+        path: "login",
+        element: <LoginPage />,
+        routeMetadata: {
+          pageIdentifier: 'login',
+        },
+      },
+      {
+        path: "profissional",
+        element: <ProfessionalPage />,
+        routeMetadata: {
+          pageIdentifier: 'profissional',
+        },
+      },
+      {
+        path: "contratante",
+        element: <ContractorPage />,
+        routeMetadata: {
+          pageIdentifier: 'contratante',
         },
       },
       {

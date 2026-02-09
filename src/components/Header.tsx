@@ -2,10 +2,12 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAuthStore } from '@/store/authStore';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { isAuthenticated, userRole, logout } = useAuthStore();
 
   const navLinks = [
     { href: '/', label: 'Início' },
@@ -45,6 +47,32 @@ export default function Header() {
                 {link.label}
               </Link>
             ))}
+            {isAuthenticated ? (
+              <>
+                <Link
+                  to={userRole === 'professional' ? '/profissional' : '/contratante'}
+                  className="font-heading uppercase text-lg tracking-wide text-primary border-b-2 border-primary"
+                >
+                  {userRole === 'professional' ? 'Minha Área' : 'Minha Empresa'}
+                </Link>
+                <button
+                  onClick={() => {
+                    logout();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="font-heading uppercase text-lg tracking-wide text-foreground hover:text-primary transition-all"
+                >
+                  Sair
+                </button>
+              </>
+            ) : (
+              <Link
+                to="/login"
+                className="font-heading uppercase text-lg tracking-wide bg-primary text-primary-foreground px-6 py-2 hover:bg-white hover:text-background transition-all"
+              >
+                Login
+              </Link>
+            )}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -81,6 +109,34 @@ export default function Header() {
                     {link.label}
                   </Link>
                 ))}
+                {isAuthenticated ? (
+                  <>
+                    <Link
+                      to={userRole === 'professional' ? '/profissional' : '/contratante'}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="font-heading uppercase text-xl tracking-wide text-primary"
+                    >
+                      {userRole === 'professional' ? 'Minha Área' : 'Minha Empresa'}
+                    </Link>
+                    <button
+                      onClick={() => {
+                        logout();
+                        setMobileMenuOpen(false);
+                      }}
+                      className="font-heading uppercase text-xl tracking-wide text-foreground hover:text-primary transition-all text-left"
+                    >
+                      Sair
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    to="/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="font-heading uppercase text-xl tracking-wide bg-primary text-primary-foreground px-6 py-2 hover:bg-white hover:text-background transition-all inline-block"
+                  >
+                    Login
+                  </Link>
+                )}
               </div>
             </motion.nav>
           )}

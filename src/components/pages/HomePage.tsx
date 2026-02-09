@@ -330,13 +330,13 @@ export default function HomePage() {
                   Ver Todas as Vagas
                 </motion.button>
               </Link>
-              <Link to="/empresas">
+              <Link to="/login">
                 <motion.button
                   whileHover={{ scale: 1.05, backgroundColor: "#000000", color: "#FFFFFF" }}
                   whileTap={{ scale: 0.95 }}
                   className="bg-transparent text-black font-heading uppercase px-16 py-6 text-xl tracking-wider border-2 border-black transition-all"
                 >
-                  Sou Empresa
+                  Entrar na Plataforma
                 </motion.button>
               </Link>
             </div>
