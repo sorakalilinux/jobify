@@ -124,27 +124,30 @@ export default function CandidatarPage() {
     return (
       <div className="min-h-screen bg-background">
         <Header />
-        <div className="w-full bg-background py-20">
-          <div className="max-w-[100rem] mx-auto px-8">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="max-w-2xl mx-auto text-center"
-            >
-              <div className="bg-secondary border-2 border-primary p-12">
-                <CheckCircle className="w-24 h-24 text-primary mx-auto mb-6" />
-                <h1 className="font-heading text-5xl uppercase text-primary mb-6">
-                  Candidatura Enviada!
-                </h1>
-                <p className="font-paragraph text-foreground text-xl mb-8">
-                  Sua candidatura foi enviada com sucesso. A empresa entrará em contato em breve.
-                </p>
-                <p className="font-paragraph text-foreground text-sm">
-                  Redirecionando para a página de vagas...
-                </p>
-              </div>
-            </motion.div>
-          </div>
+        <div className="pt-32 pb-20 px-6 md:px-12 max-w-[100rem] mx-auto">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="max-w-2xl mx-auto text-center"
+          >
+            <div className="bg-secondary/50 backdrop-blur-sm border border-secondary-foreground/30 rounded-2xl p-12">
+              <motion.div
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ duration: 0.6 }}
+              >
+                <CheckCircle className="w-24 h-24 text-secondary-foreground mx-auto mb-6" />
+              </motion.div>
+              <h1 className="font-heading text-5xl font-bold text-foreground mb-6">
+                Candidatura Enviada!
+              </h1>
+              <p className="font-paragraph text-surface text-xl mb-8">
+                Sua candidatura foi enviada com sucesso. A empresa entrará em contato em breve.
+              </p>
+              <p className="font-paragraph text-surface text-sm">
+                Redirecionando para a página de vagas...
+              </p>
+            </div>
+          </motion.div>
         </div>
         <Footer />
       </div>
@@ -155,173 +158,175 @@ export default function CandidatarPage() {
     <div className="min-h-screen bg-background">
       <Header />
 
-      <div className="w-full bg-background py-16">
-        <div className="max-w-[100rem] mx-auto px-8">
-          <div className="min-h-[600px]">
-            {isLoading ? (
-              <div className="flex items-center justify-center py-20">
-                <LoadingSpinner />
+      <div className="pt-32 pb-20 px-6 md:px-12 max-w-[100rem] mx-auto">
+        <div className="min-h-[600px]">
+          {isLoading ? (
+            <div className="flex items-center justify-center py-20">
+              <LoadingSpinner />
+            </div>
+          ) : !job ? (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center py-20"
+            >
+              <h2 className="font-heading text-4xl font-bold text-foreground mb-4">
+                Vaga não encontrada
+              </h2>
+              <Link to="/vagas">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-secondary-foreground text-background font-heading font-bold px-8 py-4 text-lg rounded-lg inline-flex items-center gap-2"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                  Voltar para Vagas
+                </motion.button>
+              </Link>
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="max-w-4xl mx-auto"
+            >
+              {/* Back Button */}
+              <Link to={`/vagas/${id}`}>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="font-heading font-bold text-secondary-foreground hover:text-foreground transition-all mb-8 inline-flex items-center gap-2"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                  Voltar
+                </motion.button>
+              </Link>
+
+              <div className="bg-secondary/50 backdrop-blur-sm border border-secondary-foreground/30 rounded-2xl p-10">
+                <h1 className="font-heading text-5xl font-bold text-foreground mb-4">
+                  Candidatar-se
+                </h1>
+                <p className="font-paragraph text-surface text-xl mb-2">
+                  Vaga: <span className="text-secondary-foreground font-bold">{job.jobTitle}</span>
+                </p>
+                <p className="font-paragraph text-surface mb-10">
+                  Preencha o formulário abaixo para enviar sua candidatura
+                </p>
+
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Name */}
+                  <div>
+                    <label htmlFor="candidateName" className="font-heading font-bold text-secondary-foreground text-sm mb-2 block">
+                      Nome Completo *
+                    </label>
+                    <input
+                      type="text"
+                      id="candidateName"
+                      name="candidateName"
+                      value={formData.candidateName}
+                      onChange={handleChange}
+                      className={`w-full bg-secondary/50 text-foreground font-paragraph px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition ${
+                        errors.candidateName ? 'border-destructive focus:ring-destructive' : 'border-secondary-foreground/30 focus:ring-secondary-foreground/30'
+                      }`}
+                      placeholder="Seu nome completo"
+                    />
+                    {errors.candidateName && (
+                      <p className="font-paragraph text-destructive text-sm mt-2">{errors.candidateName}</p>
+                    )}
+                  </div>
+
+                  {/* Email */}
+                  <div>
+                    <label htmlFor="candidateEmail" className="font-heading font-bold text-secondary-foreground text-sm mb-2 block">
+                      Email *
+                    </label>
+                    <input
+                      type="email"
+                      id="candidateEmail"
+                      name="candidateEmail"
+                      value={formData.candidateEmail}
+                      onChange={handleChange}
+                      className={`w-full bg-secondary/50 text-foreground font-paragraph px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition ${
+                        errors.candidateEmail ? 'border-destructive focus:ring-destructive' : 'border-secondary-foreground/30 focus:ring-secondary-foreground/30'
+                      }`}
+                      placeholder="seu.email@exemplo.com"
+                    />
+                    {errors.candidateEmail && (
+                      <p className="font-paragraph text-destructive text-sm mt-2">{errors.candidateEmail}</p>
+                    )}
+                  </div>
+
+                  {/* Phone */}
+                  <div>
+                    <label htmlFor="candidatePhone" className="font-heading font-bold text-secondary-foreground text-sm mb-2 block">
+                      Telefone *
+                    </label>
+                    <input
+                      type="tel"
+                      id="candidatePhone"
+                      name="candidatePhone"
+                      value={formData.candidatePhone}
+                      onChange={handleChange}
+                      className={`w-full bg-secondary/50 text-foreground font-paragraph px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition ${
+                        errors.candidatePhone ? 'border-destructive focus:ring-destructive' : 'border-secondary-foreground/30 focus:ring-secondary-foreground/30'
+                      }`}
+                      placeholder="(11) 99999-9999"
+                    />
+                    {errors.candidatePhone && (
+                      <p className="font-paragraph text-destructive text-sm mt-2">{errors.candidatePhone}</p>
+                    )}
+                  </div>
+
+                  {/* Resume URL */}
+                  <div>
+                    <label htmlFor="resumeFile" className="font-heading font-bold text-secondary-foreground text-sm mb-2 block">
+                      Link do Currículo *
+                    </label>
+                    <input
+                      type="url"
+                      id="resumeFile"
+                      name="resumeFile"
+                      value={formData.resumeFile}
+                      onChange={handleChange}
+                      className={`w-full bg-secondary/50 text-foreground font-paragraph px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition ${
+                        errors.resumeFile ? 'border-destructive focus:ring-destructive' : 'border-secondary-foreground/30 focus:ring-secondary-foreground/30'
+                      }`}
+                      placeholder="https://drive.google.com/..."
+                    />
+                    <p className="font-paragraph text-surface text-sm mt-2">
+                      Cole o link do seu currículo (Google Drive, Dropbox, etc.)
+                    </p>
+                    {errors.resumeFile && (
+                      <p className="font-paragraph text-destructive text-sm mt-2">{errors.resumeFile}</p>
+                    )}
+                  </div>
+
+                  {/* Submit Button */}
+                  <div className="pt-6">
+                    <motion.button
+                      type="submit"
+                      disabled={isSubmitting}
+                      whileHover={{ scale: isSubmitting ? 1 : 1.05, boxShadow: isSubmitting ? 'none' : '0 20px 40px rgba(127, 255, 0, 0.3)' }}
+                      whileTap={{ scale: isSubmitting ? 1 : 0.95 }}
+                      className="w-full bg-secondary-foreground text-background font-heading font-bold py-4 text-lg rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <LoadingSpinner />
+                          Enviando...
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-5 h-5" />
+                          Enviar Candidatura
+                        </>
+                      )}
+                    </motion.button>
+                  </div>
+                </form>
               </div>
-            ) : !job ? (
-              <div className="text-center py-20">
-                <h2 className="font-heading text-4xl uppercase text-primary mb-4">
-                  Vaga não encontrada
-                </h2>
-                <Link to="/vagas">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-primary text-primary-foreground font-heading uppercase px-8 py-4 text-lg tracking-wider inline-flex items-center gap-2"
-                  >
-                    <ArrowLeft className="w-5 h-5" />
-                    Voltar para Vagas
-                  </motion.button>
-                </Link>
-              </div>
-            ) : (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="max-w-4xl mx-auto"
-              >
-                {/* Back Button */}
-                <Link to={`/vagas/${id}`}>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="font-heading uppercase text-primary hover:text-foreground transition-all mb-8 inline-flex items-center gap-2"
-                  >
-                    <ArrowLeft className="w-5 h-5" />
-                    Voltar
-                  </motion.button>
-                </Link>
-
-                <div className="bg-secondary border-2 border-primary p-10">
-                  <h1 className="font-heading text-5xl uppercase text-primary mb-4">
-                    Candidatar-se
-                  </h1>
-                  <p className="font-paragraph text-foreground text-xl mb-2">
-                    Vaga: <span className="text-primary">{job.jobTitle}</span>
-                  </p>
-                  <p className="font-paragraph text-foreground mb-10">
-                    Preencha o formulário abaixo para enviar sua candidatura
-                  </p>
-
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Name */}
-                    <div>
-                      <label htmlFor="candidateName" className="font-heading uppercase text-primary text-sm mb-2 block">
-                        Nome Completo *
-                      </label>
-                      <input
-                        type="text"
-                        id="candidateName"
-                        name="candidateName"
-                        value={formData.candidateName}
-                        onChange={handleChange}
-                        className={`w-full bg-background text-foreground font-paragraph px-4 py-4 border-2 ${
-                          errors.candidateName ? 'border-destructive' : 'border-primary'
-                        } focus:outline-none focus:ring-2 focus:ring-primary`}
-                        placeholder="Seu nome completo"
-                      />
-                      {errors.candidateName && (
-                        <p className="font-paragraph text-destructive text-sm mt-2">{errors.candidateName}</p>
-                      )}
-                    </div>
-
-                    {/* Email */}
-                    <div>
-                      <label htmlFor="candidateEmail" className="font-heading uppercase text-primary text-sm mb-2 block">
-                        Email *
-                      </label>
-                      <input
-                        type="email"
-                        id="candidateEmail"
-                        name="candidateEmail"
-                        value={formData.candidateEmail}
-                        onChange={handleChange}
-                        className={`w-full bg-background text-foreground font-paragraph px-4 py-4 border-2 ${
-                          errors.candidateEmail ? 'border-destructive' : 'border-primary'
-                        } focus:outline-none focus:ring-2 focus:ring-primary`}
-                        placeholder="seu.email@exemplo.com"
-                      />
-                      {errors.candidateEmail && (
-                        <p className="font-paragraph text-destructive text-sm mt-2">{errors.candidateEmail}</p>
-                      )}
-                    </div>
-
-                    {/* Phone */}
-                    <div>
-                      <label htmlFor="candidatePhone" className="font-heading uppercase text-primary text-sm mb-2 block">
-                        Telefone *
-                      </label>
-                      <input
-                        type="tel"
-                        id="candidatePhone"
-                        name="candidatePhone"
-                        value={formData.candidatePhone}
-                        onChange={handleChange}
-                        className={`w-full bg-background text-foreground font-paragraph px-4 py-4 border-2 ${
-                          errors.candidatePhone ? 'border-destructive' : 'border-primary'
-                        } focus:outline-none focus:ring-2 focus:ring-primary`}
-                        placeholder="(11) 99999-9999"
-                      />
-                      {errors.candidatePhone && (
-                        <p className="font-paragraph text-destructive text-sm mt-2">{errors.candidatePhone}</p>
-                      )}
-                    </div>
-
-                    {/* Resume URL */}
-                    <div>
-                      <label htmlFor="resumeFile" className="font-heading uppercase text-primary text-sm mb-2 block">
-                        Link do Currículo *
-                      </label>
-                      <input
-                        type="url"
-                        id="resumeFile"
-                        name="resumeFile"
-                        value={formData.resumeFile}
-                        onChange={handleChange}
-                        className={`w-full bg-background text-foreground font-paragraph px-4 py-4 border-2 ${
-                          errors.resumeFile ? 'border-destructive' : 'border-primary'
-                        } focus:outline-none focus:ring-2 focus:ring-primary`}
-                        placeholder="https://drive.google.com/..."
-                      />
-                      <p className="font-paragraph text-foreground text-sm mt-2">
-                        Cole o link do seu currículo (Google Drive, Dropbox, etc.)
-                      </p>
-                      {errors.resumeFile && (
-                        <p className="font-paragraph text-destructive text-sm mt-2">{errors.resumeFile}</p>
-                      )}
-                    </div>
-
-                    {/* Submit Button */}
-                    <div className="pt-6">
-                      <motion.button
-                        type="submit"
-                        disabled={isSubmitting}
-                        whileHover={{ scale: isSubmitting ? 1 : 1.05 }}
-                        whileTap={{ scale: isSubmitting ? 1 : 0.95 }}
-                        className="w-full bg-primary text-primary-foreground font-heading uppercase py-5 text-lg tracking-wider hover:bg-opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
-                      >
-                        {isSubmitting ? (
-                          <>
-                            <LoadingSpinner />
-                            Enviando...
-                          </>
-                        ) : (
-                          <>
-                            <Send className="w-5 h-5" />
-                            Enviar Candidatura
-                          </>
-                        )}
-                      </motion.button>
-                    </div>
-                  </form>
-                </div>
-              </motion.div>
-            )}
-          </div>
+            </motion.div>
+          )}
         </div>
       </div>
 

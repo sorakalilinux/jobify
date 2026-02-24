@@ -76,38 +76,39 @@ export default function EmpresasPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="w-full bg-secondary py-20 border-b-2 border-primary">
-        <div className="max-w-[100rem] mx-auto px-8">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="font-heading text-6xl md:text-7xl uppercase text-primary text-center mb-6"
-          >
-            Painel da Empresa
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="font-paragraph text-xl text-foreground text-center max-w-3xl mx-auto"
-          >
+      <section className="pt-32 pb-16 px-6 md:px-12 max-w-[100rem] mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-12"
+        >
+          <h1 className="text-6xl md:text-7xl font-heading font-bold text-foreground mb-6">
+            Painel da <span className="text-secondary-foreground">Empresa</span>
+          </h1>
+          <p className="text-xl font-paragraph text-surface max-w-3xl mx-auto">
             Gerencie todas as candidaturas recebidas em um só lugar
-          </motion.p>
-        </div>
+          </p>
+        </motion.div>
       </section>
 
       {/* Filters */}
-      <section className="w-full bg-background py-12 border-b border-primary">
-        <div className="max-w-[100rem] mx-auto px-8">
+      <section className="px-6 md:px-12 max-w-[100rem] mx-auto mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="space-y-6"
+        >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Search */}
-            <div>
+            <div className="relative">
               <input
                 type="text"
                 placeholder="Buscar por nome, email ou vaga..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-secondary text-foreground font-paragraph px-4 py-4 border-2 border-primary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary"
+                className="w-full bg-secondary/50 text-foreground font-paragraph px-4 py-3 border border-secondary-foreground/30 rounded-lg focus:outline-none focus:border-secondary-foreground focus:ring-2 focus:ring-secondary-foreground/30 backdrop-blur-sm transition"
               />
             </div>
 
@@ -115,7 +116,7 @@ export default function EmpresasPage() {
             <select
               value={selectedJob}
               onChange={(e) => setSelectedJob(e.target.value)}
-              className="bg-secondary text-foreground font-paragraph px-4 py-4 border-2 border-primary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary"
+              className="bg-secondary/50 text-foreground font-paragraph px-4 py-3 border border-secondary-foreground/30 rounded-lg focus:outline-none focus:border-secondary-foreground focus:ring-2 focus:ring-secondary-foreground/30 backdrop-blur-sm transition"
             >
               <option value="">Todas as Vagas</option>
               {jobTitles.map(title => (
@@ -125,149 +126,152 @@ export default function EmpresasPage() {
           </div>
 
           {/* Results Count */}
-          <div className="mt-6">
-            <p className="font-paragraph text-foreground text-lg">
-              <span className="text-primary font-heading">{filteredApplications.length}</span> {filteredApplications.length === 1 ? 'candidatura encontrada' : 'candidaturas encontradas'}
-            </p>
-          </div>
-        </div>
+          <p className="font-paragraph text-surface">
+            <span className="text-secondary-foreground font-heading">{filteredApplications.length}</span> {filteredApplications.length === 1 ? 'candidatura' : 'candidaturas'}
+          </p>
+        </motion.div>
       </section>
 
       {/* Applications List */}
-      <section className="w-full bg-background py-16">
-        <div className="max-w-[100rem] mx-auto px-8">
-          <div className="min-h-[600px]">
-            {isLoading ? null : filteredApplications.length > 0 ? (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="space-y-6"
-              >
-                {filteredApplications.map((application, index) => (
-                  <motion.div
-                    key={application._id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.03 }}
-                    className="bg-secondary border-2 border-primary p-8 hover:border-primary hover:bg-opacity-80 transition-all"
-                  >
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                      {/* Candidate Info */}
-                      <div className="lg:col-span-2">
-                        <div className="flex items-start justify-between mb-6">
-                          <div>
-                            <h3 className="font-heading text-3xl uppercase text-primary mb-2">
-                              {application.candidateName}
-                            </h3>
-                            {application.appliedJobTitle && (
-                              <p className="font-paragraph text-foreground text-lg">
-                                Candidato para: <span className="text-primary">{application.appliedJobTitle}</span>
-                              </p>
-                            )}
-                          </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                          {application.candidateEmail && (
-                            <div className="flex items-center gap-3">
-                              <Mail className="w-5 h-5 text-primary flex-shrink-0" />
-                              <div>
-                                <p className="font-heading text-xs uppercase text-primary mb-1">Email</p>
-                                <a
-                                  href={`mailto:${application.candidateEmail}`}
-                                  className="font-paragraph text-foreground hover:text-primary transition-all break-all"
-                                >
-                                  {application.candidateEmail}
-                                </a>
-                              </div>
-                            </div>
-                          )}
-
-                          {application.candidatePhone && (
-                            <div className="flex items-center gap-3">
-                              <Phone className="w-5 h-5 text-primary flex-shrink-0" />
-                              <div>
-                                <p className="font-heading text-xs uppercase text-primary mb-1">Telefone</p>
-                                <a
-                                  href={`tel:${application.candidatePhone}`}
-                                  className="font-paragraph text-foreground hover:text-primary transition-all"
-                                >
-                                  {application.candidatePhone}
-                                </a>
-                              </div>
-                            </div>
-                          )}
-
-                          {application._createdDate && (
-                            <div className="flex items-center gap-3">
-                              <Calendar className="w-5 h-5 text-primary flex-shrink-0" />
-                              <div>
-                                <p className="font-heading text-xs uppercase text-primary mb-1">Data da Candidatura</p>
-                                <p className="font-paragraph text-foreground">
-                                  {formatDate(application._createdDate)}
-                                </p>
-                              </div>
-                            </div>
-                          )}
-                        </div>
+      <section className="px-6 md:px-12 max-w-[100rem] mx-auto pb-20">
+        <div className="min-h-[600px]">
+          {isLoading ? null : filteredApplications.length > 0 ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="space-y-6"
+            >
+              {filteredApplications.map((application, index) => (
+                <motion.div
+                  key={application._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.03 }}
+                  whileHover={{ y: -5, boxShadow: '0 20px 40px rgba(127, 255, 0, 0.1)' }}
+                  className="bg-secondary/50 backdrop-blur-sm border border-secondary-foreground/30 rounded-2xl p-8 hover:border-secondary-foreground/50 transition-all"
+                >
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* Candidate Info */}
+                    <div className="lg:col-span-2">
+                      <div className="mb-6">
+                        <h3 className="font-heading text-3xl font-bold text-foreground mb-2">
+                          {application.candidateName}
+                        </h3>
+                        {application.appliedJobTitle && (
+                          <p className="font-paragraph text-surface text-lg">
+                            Candidato para: <span className="text-secondary-foreground font-bold">{application.appliedJobTitle}</span>
+                          </p>
+                        )}
                       </div>
 
-                      {/* Actions */}
-                      <div className="lg:col-span-1 flex flex-col justify-center gap-4">
-                        {application.resumeFile && (
-                          <a
-                            href={application.resumeFile}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="bg-primary text-primary-foreground font-heading uppercase px-6 py-4 text-center hover:bg-opacity-90 transition-all flex items-center justify-center gap-2"
-                          >
-                            <FileText className="w-5 h-5" />
-                            Ver Currículo
-                            <ExternalLink className="w-4 h-4" />
-                          </a>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {application.candidateEmail && (
+                          <div className="flex items-center gap-3">
+                            <Mail className="w-5 h-5 text-secondary-foreground flex-shrink-0" />
+                            <div>
+                              <p className="font-heading text-xs font-bold text-secondary-foreground mb-1">Email</p>
+                              <a
+                                href={`mailto:${application.candidateEmail}`}
+                                className="font-paragraph text-surface hover:text-secondary-foreground transition-all break-all"
+                              >
+                                {application.candidateEmail}
+                              </a>
+                            </div>
+                          </div>
                         )}
 
-                        <a
-                          href={`mailto:${application.candidateEmail}`}
-                          className="bg-secondary border-2 border-primary text-primary font-heading uppercase px-6 py-4 text-center hover:bg-primary hover:text-primary-foreground transition-all flex items-center justify-center gap-2"
-                        >
-                          <Mail className="w-5 h-5" />
-                          Entrar em Contato
-                        </a>
+                        {application.candidatePhone && (
+                          <div className="flex items-center gap-3">
+                            <Phone className="w-5 h-5 text-secondary-foreground flex-shrink-0" />
+                            <div>
+                              <p className="font-heading text-xs font-bold text-secondary-foreground mb-1">Telefone</p>
+                              <a
+                                href={`tel:${application.candidatePhone}`}
+                                className="font-paragraph text-surface hover:text-secondary-foreground transition-all"
+                              >
+                                {application.candidatePhone}
+                              </a>
+                            </div>
+                          </div>
+                        )}
+
+                        {application._createdDate && (
+                          <div className="flex items-center gap-3">
+                            <Calendar className="w-5 h-5 text-secondary-foreground flex-shrink-0" />
+                            <div>
+                              <p className="font-heading text-xs font-bold text-secondary-foreground mb-1">Data da Candidatura</p>
+                              <p className="font-paragraph text-surface">
+                                {formatDate(application._createdDate)}
+                              </p>
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            ) : (
-              <div className="text-center py-20">
-                <User className="w-24 h-24 text-primary mx-auto mb-6" />
-                <p className="font-heading text-3xl uppercase text-primary mb-4">
-                  Nenhuma candidatura encontrada
-                </p>
-                <p className="font-paragraph text-foreground text-lg">
-                  {searchTerm || selectedJob
-                    ? 'Tente ajustar seus filtros de busca'
-                    : 'Ainda não há candidaturas para suas vagas'}
-                </p>
-              </div>
-            )}
-          </div>
 
-          {/* Load More */}
-          {hasNext && !isLoading && (
-            <div className="text-center mt-12">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => loadApplications(skip)}
-                className="bg-primary text-primary-foreground font-heading uppercase px-12 py-4 text-lg tracking-wider hover:bg-opacity-90 transition-all"
-              >
-                Carregar Mais Candidaturas
-              </motion.button>
-            </div>
+                    {/* Actions */}
+                    <div className="lg:col-span-1 flex flex-col justify-center gap-4">
+                      {application.resumeFile && (
+                        <motion.a
+                          href={application.resumeFile}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="bg-secondary-foreground text-background font-heading font-bold px-6 py-4 text-center rounded-lg transition-all flex items-center justify-center gap-2"
+                        >
+                          <FileText className="w-5 h-5" />
+                          Ver Currículo
+                          <ExternalLink className="w-4 h-4" />
+                        </motion.a>
+                      )}
+
+                      <motion.a
+                        href={`mailto:${application.candidateEmail}`}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="bg-secondary/50 border border-secondary-foreground/30 text-secondary-foreground font-heading font-bold px-6 py-4 text-center rounded-lg hover:border-secondary-foreground/50 transition-all flex items-center justify-center gap-2"
+                      >
+                        <Mail className="w-5 h-5" />
+                        Entrar em Contato
+                      </motion.a>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center py-20"
+            >
+              <User className="w-24 h-24 text-secondary-foreground mx-auto mb-6" />
+              <p className="font-heading text-3xl font-bold text-foreground mb-4">
+                Nenhuma candidatura encontrada
+              </p>
+              <p className="font-paragraph text-surface text-lg">
+                {searchTerm || selectedJob
+                  ? 'Tente ajustar seus filtros de busca'
+                  : 'Ainda não há candidaturas para suas vagas'}
+              </p>
+            </motion.div>
           )}
         </div>
+
+        {/* Load More */}
+        {hasNext && !isLoading && (
+          <div className="text-center mt-12">
+            <motion.button
+              whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(127, 255, 0, 0.3)' }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => loadApplications(skip)}
+              className="bg-secondary-foreground text-background font-heading font-bold px-12 py-4 text-lg rounded-lg transition-all"
+            >
+              Carregar Mais Candidaturas
+            </motion.button>
+          </div>
+        )}
       </section>
 
       <Footer />
