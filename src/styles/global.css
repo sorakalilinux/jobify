@@ -3,3 +3,67 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Ultra-modern dark mode styling */
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(10, 14, 39, 0.5);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #00D9FF, #7C3AED);
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #7C3AED, #00D9FF);
+  }
+}
+
+/* Neon glow effects */
+@layer utilities {
+  .neon-glow {
+    @apply shadow-[0_0_20px_rgba(0,217,255,0.5)];
+  }
+
+  .neon-glow-purple {
+    @apply shadow-[0_0_20px_rgba(124,58,237,0.5)];
+  }
+
+  .glow-text {
+    @apply text-electric-blue drop-shadow-[0_0_10px_rgba(0,217,255,0.5)];
+  }
+
+  .glass-effect {
+    @apply bg-dark-charcoal/40 backdrop-blur-xl border border-electric-blue/30;
+  }
+
+  .glass-effect-hover {
+    @apply hover:bg-dark-charcoal/60 hover:border-electric-blue/50 transition-all;
+  }
+}
+
+/* Parallax scrolling base */
+@layer components {
+  .parallax {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
+

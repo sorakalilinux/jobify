@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SplashScreen from '@/components/SplashScreen';
-import { ArrowRight, Briefcase, Users, Zap, Sparkles, Target, Rocket } from 'lucide-react';
+import WireframeGlobe from '@/components/WireframeGlobe';
+import { ArrowRight, Briefcase, Users, Zap, Sparkles, Target, Rocket, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function HomePage() {
@@ -49,175 +50,220 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground overflow-hidden">
       <Header />
 
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 px-6 md:px-12 max-w-[120rem] mx-auto w-full">
-        <motion.div
-          className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <motion.div variants={itemVariants} className="space-y-8">
-            <div className="space-y-4">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-                className="flex items-center gap-2 text-secondary-foreground"
-              >
-                <Sparkles size={20} />
-                <span className="font-heading font-semibold text-sm">Bem-vindo ao TalentHub</span>
-              </motion.div>
-              <h1 className="text-7xl md:text-8xl font-heading font-bold text-foreground leading-tight">
-                Conecte com os <span className="text-secondary-foreground">Melhores</span> <span className="text-secondary-foreground">Talentos</span>
-              </h1>
-            </div>
-            <p className="text-lg md:text-xl font-paragraph text-surface leading-relaxed max-w-xl">
-              Encontre oportunidades incríveis ou recrute os profissionais que sua empresa precisa. TalentHub é a ponte entre talentos e sucesso, conectando carreiras com possibilidades infinitas.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Link to="/vagas" className="w-full sm:w-auto">
-                <motion.button
-                  whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(127, 255, 0, 0.3)' }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-full bg-secondary-foreground text-background px-8 py-4 rounded-lg font-heading font-bold text-lg flex items-center justify-center gap-2 hover:bg-secondary-foreground/90 transition"
-                >
-                  Explorar Vagas <ArrowRight size={20} />
-                </motion.button>
-              </Link>
-              <Link to="/empresas" className="w-full sm:w-auto">
-                <motion.button
-                  whileHover={{ scale: 1.05, borderColor: '#7FFF00', backgroundColor: 'rgba(127, 255, 0, 0.1)' }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-full border-2 border-secondary-foreground text-secondary-foreground px-8 py-4 rounded-lg font-heading font-bold text-lg flex items-center justify-center gap-2 transition"
-                >
-                  Ver Empresas <ArrowRight size={20} />
-                </motion.button>
-              </Link>
-            </div>
-          </motion.div>
-
-          {/* 3D Animated Element - Enhanced */}
+      {/* Hero Section - Ultra Modern with 3D Globe */}
+      <section className="relative min-h-screen w-full flex items-center justify-center overflow-hidden pt-20">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Gradient orbs */}
           <motion.div
-            variants={itemVariants}
-            className="relative h-96 md:h-full min-h-[500px] flex items-center justify-center"
-          >
-            {/* Animated Background Orbs */}
-            <motion.div
-              animate={{
-                y: [0, -30, 0],
-                x: [0, 20, 0],
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-              className="absolute top-0 right-0 w-72 h-72 bg-secondary-foreground/10 rounded-full blur-3xl"
-            />
-            <motion.div
-              animate={{
-                y: [0, 30, 0],
-                x: [0, -20, 0],
-              }}
-              transition={{
-                duration: 10,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-              className="absolute bottom-0 left-0 w-72 h-72 bg-secondary-foreground/5 rounded-full blur-3xl"
-            />
+            animate={{
+              x: [0, 100, 0],
+              y: [0, 50, 0],
+            }}
+            transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute top-20 left-10 w-96 h-96 bg-cyber-purple/20 rounded-full blur-3xl"
+          />
+          <motion.div
+            animate={{
+              x: [0, -100, 0],
+              y: [0, -50, 0],
+            }}
+            transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
+            className="absolute bottom-20 right-10 w-96 h-96 bg-electric-blue/20 rounded-full blur-3xl"
+          />
+        </div>
 
-            {/* Main 3D Card */}
+        {/* Main Hero Content */}
+        <div className="relative z-10 w-full max-w-[120rem] mx-auto px-6 md:px-12 py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[600px]">
+            {/* Left Content */}
             <motion.div
-              animate={{
-                y: [0, -20, 0],
-                rotateX: [0, 5, 0],
-              }}
-              transition={{
-                duration: 6,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-              className="relative z-10 w-full h-full max-w-sm bg-gradient-to-br from-secondary-foreground/20 via-secondary-foreground/10 to-secondary-foreground/5 rounded-3xl backdrop-blur-md border border-secondary-foreground/30 flex flex-col items-center justify-center p-8 overflow-hidden"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="space-y-8 z-20"
             >
-              {/* Animated Grid Background */}
-              <div className="absolute inset-0 opacity-20">
-                <div className="absolute inset-0 bg-gradient-to-b from-secondary-foreground/20 to-transparent" />
+              <div className="space-y-6">
+                <motion.div
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="flex items-center gap-3"
+                >
+                  <div className="w-2 h-2 bg-electric-blue rounded-full animate-pulse" />
+                  <span className="font-heading font-semibold text-sm text-electric-blue uppercase tracking-widest">
+                    O Futuro do Networking
+                  </span>
+                </motion.div>
+
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="text-6xl md:text-7xl lg:text-8xl font-heading font-black leading-tight"
+                >
+                  <span className="bg-gradient-to-r from-electric-blue via-cyber-purple to-electric-blue bg-clip-text text-transparent">
+                    Conecte
+                  </span>
+                  <br />
+                  <span className="text-foreground">com os Melhores</span>
+                  <br />
+                  <span className="text-foreground">Talentos</span>
+                </motion.h1>
               </div>
 
-              {/* Main Icon */}
-              <motion.div
-                animate={{
-                  scale: [1, 1.15, 1],
-                  rotate: [0, 360],
-                }}
-                transition={{
-                  duration: 8,
-                  repeat: Infinity,
-                  ease: 'linear',
-                }}
-                className="text-secondary-foreground mb-6 relative z-20"
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="text-lg md:text-xl font-paragraph text-surface leading-relaxed max-w-lg"
               >
-                <Rocket size={80} strokeWidth={1.5} />
+                Plataforma de networking de próxima geração. Encontre oportunidades incríveis ou recrute os profissionais que sua empresa precisa.
+              </motion.p>
+
+              {/* Floating Search Bar */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                className="flex gap-3 pt-4"
+              >
+                <div className="flex-1 relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-electric-blue to-cyber-purple rounded-lg blur opacity-0 group-hover:opacity-100 transition duration-300" />
+                  <input
+                    type="text"
+                    placeholder="Buscar vagas, empresas..."
+                    className="relative w-full bg-dark-charcoal border border-electric-blue/30 rounded-lg px-6 py-4 text-foreground placeholder-surface/50 focus:outline-none focus:border-electric-blue transition-all"
+                  />
+                  <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-electric-blue/60 w-5 h-5" />
+                </div>
               </motion.div>
 
-              {/* Text Content */}
-              <div className="text-center relative z-20 space-y-3">
-                <h3 className="text-2xl font-heading font-bold text-foreground">Transforme sua Carreira</h3>
-                <p className="text-sm font-paragraph text-surface">Acesso a oportunidades exclusivas e comunidade vibrante</p>
-              </div>
-
-              {/* Floating Elements */}
+              {/* CTA Buttons */}
               <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 3, repeat: Infinity }}
-                className="absolute top-8 left-8 text-secondary-foreground/40"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.7 }}
+                className="flex flex-col sm:flex-row gap-4 pt-4"
               >
-                <Sparkles size={24} />
-              </motion.div>
-              <motion.div
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 4, repeat: Infinity }}
-                className="absolute bottom-8 right-8 text-secondary-foreground/40"
-              >
-                <Target size={24} />
+                <Link to="/vagas" className="w-full sm:w-auto">
+                  <motion.button
+                    whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(0, 217, 255, 0.5)' }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-full bg-gradient-to-r from-electric-blue to-cyber-purple text-background px-8 py-4 rounded-lg font-heading font-bold text-lg flex items-center justify-center gap-2 hover:shadow-lg transition-all"
+                  >
+                    Explorar Vagas <ArrowRight size={20} />
+                  </motion.button>
+                </Link>
+                <Link to="/empresas" className="w-full sm:w-auto">
+                  <motion.button
+                    whileHover={{ scale: 1.05, borderColor: '#00D9FF', backgroundColor: 'rgba(0, 217, 255, 0.1)' }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-full border-2 border-electric-blue text-electric-blue px-8 py-4 rounded-lg font-heading font-bold text-lg flex items-center justify-center gap-2 transition-all"
+                  >
+                    Ver Empresas <ArrowRight size={20} />
+                  </motion.button>
+                </Link>
               </motion.div>
             </motion.div>
-          </motion.div>
-        </motion.div>
+
+            {/* Right - 3D Globe with Floating Cards */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="relative h-96 md:h-full min-h-[600px] flex items-center justify-center"
+            >
+              {/* Globe Container */}
+              <div className="relative w-full h-full flex items-center justify-center">
+                <WireframeGlobe />
+
+                {/* Floating Profile Cards - Glassmorphism */}
+                <motion.div
+                  animate={{ y: [0, -20, 0] }}
+                  transition={{ duration: 4, repeat: Infinity }}
+                  className="absolute top-12 left-0 w-48 bg-dark-charcoal/40 backdrop-blur-xl border border-electric-blue/30 rounded-2xl p-4 shadow-2xl"
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 bg-gradient-to-br from-electric-blue to-cyber-purple rounded-full" />
+                    <div>
+                      <p className="font-heading font-bold text-sm text-foreground">Alex Silva</p>
+                      <p className="text-xs text-surface">Designer UX/UI</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="text-xs bg-electric-blue/20 text-electric-blue px-2 py-1 rounded">Design</span>
+                    <span className="text-xs bg-cyber-purple/20 text-cyber-purple px-2 py-1 rounded">Tech</span>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  animate={{ y: [0, 20, 0] }}
+                  transition={{ duration: 5, repeat: Infinity, delay: 0.5 }}
+                  className="absolute bottom-12 right-0 w-48 bg-dark-charcoal/40 backdrop-blur-xl border border-cyber-purple/30 rounded-2xl p-4 shadow-2xl"
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 bg-gradient-to-br from-cyber-purple to-electric-blue rounded-full" />
+                    <div>
+                      <p className="font-heading font-bold text-sm text-foreground">TechCorp</p>
+                      <p className="text-xs text-surface">Hiring Now</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="text-xs bg-cyber-purple/20 text-cyber-purple px-2 py-1 rounded">Tech</span>
+                    <span className="text-xs bg-electric-blue/20 text-electric-blue px-2 py-1 rounded">Jobs</span>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  animate={{ y: [0, -15, 0], x: [0, 15, 0] }}
+                  transition={{ duration: 6, repeat: Infinity, delay: 1 }}
+                  className="absolute top-1/3 right-12 w-48 bg-dark-charcoal/40 backdrop-blur-xl border border-electric-blue/30 rounded-2xl p-4 shadow-2xl"
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 bg-gradient-to-br from-electric-blue to-cyber-purple rounded-full" />
+                    <div>
+                      <p className="font-heading font-bold text-sm text-foreground">Maria Costa</p>
+                      <p className="text-xs text-surface">Dev Full Stack</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="text-xs bg-electric-blue/20 text-electric-blue px-2 py-1 rounded">Dev</span>
+                    <span className="text-xs bg-cyber-purple/20 text-cyber-purple px-2 py-1 rounded">Senior</span>
+                  </div>
+                </motion.div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-32 px-6 md:px-12 bg-secondary/20 backdrop-blur-sm relative overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-secondary-foreground rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary-foreground rounded-full blur-3xl" />
-        </div>
+      {/* Features Section - Modern Grid */}
+      <section className="py-32 px-6 md:px-12 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-dark-charcoal/50 to-background" />
 
         <div className="max-w-[120rem] mx-auto relative z-10">
           <motion.div
             className="text-center mb-20"
-            variants={itemVariants}
-            initial="hidden"
-            whileInView="visible"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
           >
             <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              className="flex items-center justify-center gap-2 text-secondary-foreground mb-4"
+              className="flex items-center justify-center gap-2 text-electric-blue mb-4"
             >
               <Sparkles size={20} />
-              <span className="font-heading font-semibold">Recursos Principais</span>
+              <span className="font-heading font-semibold uppercase tracking-widest text-sm">Recursos Principais</span>
             </motion.div>
-            <h2 className="text-6xl md:text-7xl font-heading font-bold mb-6">
-              Por que escolher <span className="text-secondary-foreground">TalentHub?</span>
+            <h2 className="text-6xl md:text-7xl font-heading font-black mb-6">
+              Por que escolher <span className="bg-gradient-to-r from-electric-blue to-cyber-purple bg-clip-text text-transparent">TalentHub?</span>
             </h2>
             <p className="text-lg md:text-xl font-paragraph text-surface max-w-3xl mx-auto">
               Plataforma moderna, intuitiva e poderosa para conectar talentos excepcionais com oportunidades transformadoras
@@ -226,10 +272,10 @@ export default function HomePage() {
 
           <motion.div
             className="grid grid-cols-1 md:grid-cols-3 gap-8"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
+            transition={{ staggerChildren: 0.1 }}
           >
             {[
               {
@@ -255,20 +301,23 @@ export default function HomePage() {
               return (
                 <motion.div
                   key={idx}
-                  variants={itemVariants}
-                  whileHover={{ y: -15, boxShadow: '0 30px 60px rgba(127, 255, 0, 0.15)' }}
-                  className="bg-background/60 backdrop-blur-md border border-secondary-foreground/20 rounded-2xl p-8 hover:border-secondary-foreground/50 transition-all group"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                  whileHover={{ y: -15, boxShadow: '0 0 40px rgba(0, 217, 255, 0.2)' }}
+                  className="bg-dark-charcoal/60 backdrop-blur-xl border border-electric-blue/20 rounded-2xl p-8 hover:border-electric-blue/50 transition-all group"
                 >
                   <motion.div
                     animate={{ rotate: [0, 10, -10, 0] }}
                     transition={{ duration: 3, repeat: Infinity }}
-                    className="text-secondary-foreground mb-6 group-hover:scale-110 transition-transform"
+                    className="text-electric-blue mb-6 group-hover:scale-110 transition-transform"
                   >
                     <Icon size={56} strokeWidth={1.5} />
                   </motion.div>
                   <h3 className="text-2xl font-heading font-bold mb-3 text-foreground">{feature.title}</h3>
                   <p className="font-paragraph text-surface mb-6 leading-relaxed">{feature.description}</p>
-                  <div className="space-y-2 border-t border-secondary-foreground/10 pt-6">
+                  <div className="space-y-2 border-t border-electric-blue/10 pt-6">
                     {feature.details.map((detail, i) => (
                       <motion.div
                         key={i}
@@ -278,7 +327,7 @@ export default function HomePage() {
                         viewport={{ once: true }}
                         className="flex items-center gap-2 text-sm text-surface"
                       >
-                        <div className="w-1.5 h-1.5 bg-secondary-foreground rounded-full" />
+                        <div className="w-1.5 h-1.5 bg-gradient-to-r from-electric-blue to-cyber-purple rounded-full" />
                         {detail}
                       </motion.div>
                     ))}
@@ -290,13 +339,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-32 px-6 md:px-12 max-w-[120rem] mx-auto">
+      {/* Stats Section - Neon Glow */}
+      <section className="py-32 px-6 md:px-12 max-w-[120rem] mx-auto relative">
         <motion.div
           className="grid grid-cols-1 md:grid-cols-4 gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
           {[
@@ -309,21 +357,24 @@ export default function HomePage() {
             return (
               <motion.div
                 key={idx}
-                variants={itemVariants}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
                 className="text-center group"
               >
                 <motion.div
                   whileHover={{ scale: 1.1 }}
-                  className="inline-block mb-4 p-4 bg-secondary-foreground/10 rounded-full group-hover:bg-secondary-foreground/20 transition"
+                  className="inline-block mb-4 p-4 bg-gradient-to-br from-electric-blue/20 to-cyber-purple/20 rounded-full group-hover:from-electric-blue/30 group-hover:to-cyber-purple/30 transition border border-electric-blue/30"
                 >
-                  <Icon size={32} className="text-secondary-foreground" />
+                  <Icon size={32} className="text-electric-blue" />
                 </motion.div>
                 <motion.h3
                   initial={{ opacity: 0, y: 10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.1 }}
                   viewport={{ once: true }}
-                  className="text-5xl md:text-6xl font-heading font-bold text-secondary-foreground mb-2"
+                  className="text-5xl md:text-6xl font-heading font-black bg-gradient-to-r from-electric-blue to-cyber-purple bg-clip-text text-transparent mb-2"
                 >
                   {stat.number}
                 </motion.h3>
@@ -334,17 +385,31 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      {/* CTA Section */}
+      {/* CTA Section - Premium */}
       <section className="py-32 px-6 md:px-12 relative overflow-hidden">
-        {/* Background Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-r from-secondary-foreground/5 via-secondary-foreground/10 to-secondary-foreground/5" />
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-secondary-foreground rounded-full blur-3xl" />
+        {/* Animated background */}
+        <div className="absolute inset-0">
+          <motion.div
+            animate={{
+              x: [0, 50, 0],
+              y: [0, 30, 0],
+            }}
+            transition={{ duration: 15, repeat: Infinity }}
+            className="absolute top-0 right-0 w-96 h-96 bg-cyber-purple/20 rounded-full blur-3xl"
+          />
+          <motion.div
+            animate={{
+              x: [0, -50, 0],
+              y: [0, -30, 0],
+            }}
+            transition={{ duration: 20, repeat: Infinity }}
+            className="absolute bottom-0 left-0 w-96 h-96 bg-electric-blue/20 rounded-full blur-3xl"
+          />
         </div>
 
         <div className="max-w-[120rem] mx-auto relative z-10">
           <motion.div
-            className="bg-gradient-to-br from-secondary-foreground/15 to-secondary-foreground/5 border border-secondary-foreground/30 rounded-3xl p-12 md:p-20 text-center backdrop-blur-md"
+            className="bg-gradient-to-br from-dark-charcoal/80 to-dark-charcoal/40 border border-electric-blue/30 rounded-3xl p-12 md:p-20 text-center backdrop-blur-xl"
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -354,12 +419,12 @@ export default function HomePage() {
               initial={{ opacity: 0, y: -20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="flex items-center justify-center gap-2 text-secondary-foreground mb-6"
+              className="flex items-center justify-center gap-2 text-electric-blue mb-6"
             >
               <Sparkles size={24} />
-              <span className="font-heading font-semibold">Comece Agora</span>
+              <span className="font-heading font-semibold uppercase tracking-widest text-sm">Comece Agora</span>
             </motion.div>
-            <h2 className="text-5xl md:text-6xl font-heading font-bold mb-6 text-foreground">
+            <h2 className="text-5xl md:text-6xl font-heading font-black mb-6 bg-gradient-to-r from-electric-blue via-cyber-purple to-electric-blue bg-clip-text text-transparent">
               Pronto para transformar sua carreira?
             </h2>
             <p className="text-lg md:text-xl font-paragraph text-surface mb-10 max-w-3xl mx-auto leading-relaxed">
@@ -368,18 +433,18 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/vagas" className="w-full sm:w-auto">
                 <motion.button
-                  whileHover={{ scale: 1.05, boxShadow: '0 20px 40px rgba(127, 255, 0, 0.3)' }}
+                  whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(0, 217, 255, 0.5)' }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-full bg-secondary-foreground text-background px-10 py-4 rounded-lg font-heading font-bold text-lg hover:bg-secondary-foreground/90 transition"
+                  className="w-full bg-gradient-to-r from-electric-blue to-cyber-purple text-background px-10 py-4 rounded-lg font-heading font-bold text-lg hover:shadow-lg transition-all"
                 >
                   Buscar Vagas Agora
                 </motion.button>
               </Link>
               <Link to="/empresas" className="w-full sm:w-auto">
                 <motion.button
-                  whileHover={{ scale: 1.05, borderColor: '#7FFF00', backgroundColor: 'rgba(127, 255, 0, 0.1)' }}
+                  whileHover={{ scale: 1.05, borderColor: '#00D9FF', backgroundColor: 'rgba(0, 217, 255, 0.1)' }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-full border-2 border-secondary-foreground text-secondary-foreground px-10 py-4 rounded-lg font-heading font-bold text-lg transition"
+                  className="w-full border-2 border-electric-blue text-electric-blue px-10 py-4 rounded-lg font-heading font-bold text-lg transition-all"
                 >
                   Explorar Empresas
                 </motion.button>

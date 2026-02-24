@@ -58,19 +58,22 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-secondary/50 backdrop-blur-sm border-t border-secondary-foreground/20 mt-20">
+    <footer className="bg-dark-charcoal/60 backdrop-blur-xl border-t border-electric-blue/20">
       <div className="max-w-[100rem] mx-auto px-6 md:px-12 py-16">
         <motion.div
           className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
           {/* Brand */}
-          <motion.div variants={itemVariants}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
             <Link to="/" className="flex items-center gap-2 mb-4">
-              <h3 className="text-2xl font-heading font-bold text-secondary-foreground">
+              <h3 className="text-2xl font-heading font-black bg-gradient-to-r from-electric-blue to-cyber-purple bg-clip-text text-transparent">
                 TalentHub
               </h3>
             </Link>
@@ -81,14 +84,20 @@ export default function Footer() {
 
           {/* Links */}
           {footerLinks.map((section, idx) => (
-            <motion.div key={idx} variants={itemVariants}>
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+            >
               <h4 className="font-heading font-bold text-foreground mb-4">{section.title}</h4>
               <ul className="space-y-2">
                 {section.links.map((link) => (
                   <li key={link.href}>
                     <Link
                       to={link.href}
-                      className="font-paragraph text-surface hover:text-secondary-foreground transition text-sm"
+                      className="font-paragraph text-surface hover:text-electric-blue transition text-sm"
                     >
                       {link.label}
                     </Link>
@@ -101,7 +110,7 @@ export default function Footer() {
 
         {/* Divider */}
         <motion.div
-          className="h-px bg-gradient-to-r from-transparent via-secondary-foreground/30 to-transparent mb-8"
+          className="h-px bg-gradient-to-r from-transparent via-electric-blue/30 to-transparent mb-8"
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
@@ -111,21 +120,24 @@ export default function Footer() {
         {/* Bottom */}
         <motion.div
           className="flex flex-col md:flex-row justify-between items-center gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-          <motion.p variants={itemVariants} className="font-paragraph text-surface text-sm">
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="font-paragraph text-surface text-sm"
+          >
             © {currentYear} TalentHub. Todos os direitos reservados.
           </motion.p>
 
           {/* Social Links */}
           <motion.div
             className="flex gap-6"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
           >
             {socialLinks.map((social, idx) => {
@@ -135,10 +147,9 @@ export default function Footer() {
                   key={idx}
                   href={social.href}
                   aria-label={social.label}
-                  variants={itemVariants}
-                  whileHover={{ scale: 1.2, color: '#7FFF00' }}
+                  whileHover={{ scale: 1.2, color: '#00D9FF' }}
                   whileTap={{ scale: 0.95 }}
-                  className="text-surface hover:text-secondary-foreground transition"
+                  className="text-surface hover:text-electric-blue transition"
                 >
                   <Icon size={20} />
                 </motion.a>
