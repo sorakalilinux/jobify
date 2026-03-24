@@ -2,7 +2,6 @@ import { MemberProvider } from '@/integrations';
 import { createBrowserRouter, RouterProvider, Navigate, Outlet } from 'react-router-dom';
 import { ScrollToTop } from '@/lib/scroll-to-top';
 import ErrorPage from '@/integrations/errorHandlers/ErrorPage';
-import HomePage from '@/components/pages/HomePage';
 import VagasPage from '@/components/pages/VagasPage';
 import VagaDetalhePage from '@/components/pages/VagaDetalhePage';
 import CandidatarPage from '@/components/pages/CandidatarPage';
@@ -29,10 +28,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <HomePage />,
-        routeMetadata: {
-          pageIdentifier: 'home',
-        },
+        element: <Navigate to="/vagas" replace />,
       },
       {
         path: "vagas",
