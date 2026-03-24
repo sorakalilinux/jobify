@@ -23,8 +23,8 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
     // Create rotating geometric shapes
     const geometry = new THREE.IcosahedronGeometry(2, 4);
     const material = new THREE.MeshPhongMaterial({
-      color: 0x00ff00,
-      emissive: 0x00aa00,
+      color: 0x00d9ff,
+      emissive: 0x0099cc,
       wireframe: false,
       shininess: 100,
     });
@@ -45,14 +45,14 @@ export default function SplashScreen({ onComplete }: { onComplete: () => void })
     particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positionArray, 3));
     const particlesMaterial = new THREE.PointsMaterial({
       size: 0.1,
-      color: 0x00ff00,
+      color: 0x7c3aed,
       sizeAttenuation: true,
     });
     const particles = new THREE.Points(particlesGeometry, particlesMaterial);
     scene.add(particles);
 
     // Lighting
-    const light = new THREE.PointLight(0x00ff00, 1, 100);
+    const light = new THREE.PointLight(0x00d9ff, 1, 100);
     light.position.set(5, 5, 5);
     scene.add(light);
 
