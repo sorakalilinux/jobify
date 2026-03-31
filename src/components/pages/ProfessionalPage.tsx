@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { LogOut, Briefcase, MapPin, DollarSign, Calendar, ArrowRight, Bookmark, BookmarkCheck, Trash2 } from 'lucide-react';
+import { LogOut, Briefcase, MapPin, DollarSign, Calendar, ArrowRight, Bookmark, BookmarkCheck, Trash2, MessageCircle } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useAuthStore } from '@/store/authStore';
 import { BaseCrudService } from '@/integrations';
 import { ListagemdeVagas, JobApplications } from '@/entities';
 import { Image } from '@/components/ui/image';
+import { DigitalSphere, GlassCard, NetworkParticles } from '@/components/3D';
 
 export default function ProfessionalPage() {
   const navigate = useNavigate();
@@ -79,11 +80,12 @@ export default function ProfessionalPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col relative overflow-hidden">
+      <NetworkParticles />
       <Header />
 
       {/* Top Bar */}
-      <div className="bg-secondary border-b border-white/10 px-8 py-6">
+      <div className="bg-secondary border-b border-white/10 px-8 py-6 relative z-20">
         <div className="max-w-[120rem] mx-auto flex items-center justify-between">
           <h1 className="font-heading text-3xl uppercase text-primary">Área do Profissional</h1>
           <motion.button
@@ -99,20 +101,39 @@ export default function ProfessionalPage() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-grow">
+      <div className="flex-grow relative z-10">
         <div className="max-w-[120rem] mx-auto px-8 py-16">
-          {/* Welcome Section */}
+          {/* Welcome Section with 3D */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-16"
+            className="mb-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
           >
-            <h2 className="font-heading text-5xl md:text-6xl uppercase text-foreground mb-4">
-              Bem-vindo de volta!
-            </h2>
-            <p className="font-paragraph text-foreground/60 text-lg">
-              Explore as melhores oportunidades de carreira disponíveis
-            </p>
+            <div>
+              <h2 className="font-heading text-5xl md:text-6xl uppercase text-foreground mb-4">
+                Bem-vindo de volta!
+              </h2>
+              <p className="font-paragraph text-foreground/60 text-lg mb-8">
+                Explore as melhores oportunidades de carreira disponíveis
+              </p>
+              <div className="grid grid-cols-2 gap-6">
+                <div className="bg-secondary border border-white/10 p-6">
+                  <p className="text-secondary-foreground font-heading text-2xl font-bold">{jobs.length}</p>
+                  <p className="text-foreground/60 font-paragraph text-sm">Vagas Disponíveis</p>
+                </div>
+                <div className="bg-secondary border border-white/10 p-6">
+                  <p className="text-secondary-foreground font-heading text-2xl font-bold">{applications.length}</p>
+                  <p className="text-foreground/60 font-paragraph text-sm">Minhas Candidaturas</p>
+                </div>
+              </div>
+            </div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <DigitalSphere />
+            </motion.div>
           </motion.div>
 
           {/* Tabs */}

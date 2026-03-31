@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { LogOut, Plus, Eye, Trash2, Building2, Users, Edit2, X } from 'lucide-react';
+import { LogOut, Plus, Eye, Trash2, Building2, Users, Edit2, X, MessageCircle, Send } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { useAuthStore } from '@/store/authStore';
 import { BaseCrudService } from '@/integrations';
 import { ListagemdeVagas, JobApplications } from '@/entities';
 import { Image } from '@/components/ui/image';
+import { DigitalSphere, NetworkParticles } from '@/components/3D';
 
 export default function ContractorPage() {
   const navigate = useNavigate();
@@ -17,6 +18,9 @@ export default function ContractorPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [showNewJobForm, setShowNewJobForm] = useState(false);
   const [editingJob, setEditingJob] = useState<ListagemdeVagas | null>(null);
+  const [selectedCandidate, setSelectedCandidate] = useState<JobApplications | null>(null);
+  const [showChatModal, setShowChatModal] = useState(false);
+  const [chatMessage, setChatMessage] = useState('');
   const [formData, setFormData] = useState({
     jobTitle: '',
     jobDescription: '',
@@ -143,12 +147,20 @@ export default function ContractorPage() {
     return applications.filter(app => app.appliedJobTitle === jobTitle);
   };
 
+  const handleSendMessage = () => {
+    if (!chatMessage.trim() || !selectedCandidate) return;
+    alert(`Mensagem enviada para ${selectedCandidate.candidateName}:\n\n"${chatMessage}"\n\nEm um sistema real, isso seria enviado via email ou chat.`);
+    setChatMessage('');
+    setShowChatModal(false);
+  };
+
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col relative overflow-hidden">
+      <NetworkParticles />
       <Header />
 
       {/* Top Bar */}
-      <div className="bg-secondary border-b border-white/10 px-8 py-6">
+      <div className="bg-secondary border-b border-white/10 px-8 py-6 relative z-20">
         <div className="max-w-[120rem] mx-auto flex items-center justify-between">
           <h1 className="font-heading text-3xl uppercase text-primary">Área do Contratante</h1>
           <div className="flex items-center gap-4">
@@ -187,46 +199,44 @@ export default function ContractorPage() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-grow">
+      <div className="flex-grow relative z-10">
         <div className="max-w-[120rem] mx-auto px-8 py-16">
-          {/* Welcome Section */}
+          {/* Welcome Section with 3D */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-16"
+            className="mb-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
           >
-            <h2 className="font-heading text-5xl md:text-6xl uppercase text-foreground mb-4">
-              Bem-vindo de volta!
-            </h2>
-            <p className="font-paragraph text-foreground/60 text-lg">
-              Gerencie suas vagas e encontre os melhores talentos
-            </p>
-          </motion.div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            {[
-              { label: 'Vagas Ativas', value: jobs.length, icon: Building2 },
-              { label: 'Candidaturas', value: applications.length, icon: Users },
-              { label: 'Total de Vagas', value: jobs.length, icon: Plus },
-            ].map((stat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className="bg-secondary border border-white/10 p-8"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-heading uppercase text-sm tracking-widest text-foreground/70">
-                    {stat.label}
-                  </h3>
-                  <stat.icon className="w-6 h-6 text-primary" />
+            <div>
+              <h2 className="font-heading text-5xl md:text-6xl uppercase text-foreground mb-4">
+                Bem-vindo de volta!
+              </h2>
+              <p className="font-paragraph text-foreground/60 text-lg mb-8">
+                Gerencie suas vagas e encontre os melhores talentos
+              </p>
+              <div className="grid grid-cols-3 gap-4">
+                <div className="bg-secondary border border-white/10 p-6">
+                  <p className="text-secondary-foreground font-heading text-2xl font-bold">{jobs.length}</p>
+                  <p className="text-foreground/60 font-paragraph text-xs">Vagas Ativas</p>
                 </div>
-                <p className="font-heading text-5xl text-primary">{stat.value}</p>
-              </motion.div>
-            ))}
-          </div>
+                <div className="bg-secondary border border-white/10 p-6">
+                  <p className="text-secondary-foreground font-heading text-2xl font-bold">{applications.length}</p>
+                  <p className="text-foreground/60 font-paragraph text-xs">Candidaturas</p>
+                </div>
+                <div className="bg-secondary border border-white/10 p-6">
+                  <p className="text-secondary-foreground font-heading text-2xl font-bold">{jobs.length}</p>
+                  <p className="text-foreground/60 font-paragraph text-xs">Total Vagas</p>
+                </div>
+              </div>
+            </div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <DigitalSphere />
+            </motion.div>
+          </motion.div>
 
           {/* New/Edit Job Form Modal */}
           {showNewJobForm && (
@@ -447,9 +457,23 @@ export default function ContractorPage() {
                           </p>
                           <div className="space-y-2">
                             {jobApplications.map((app) => (
-                              <div key={app._id} className="bg-background/50 p-3 text-sm">
-                                <p className="font-heading text-foreground">{app.candidateName}</p>
-                                <p className="text-foreground/60">{app.candidateEmail}</p>
+                              <div key={app._id} className="bg-background/50 p-3 text-sm flex items-center justify-between">
+                                <div>
+                                  <p className="font-heading text-foreground">{app.candidateName}</p>
+                                  <p className="text-foreground/60">{app.candidateEmail}</p>
+                                </div>
+                                <motion.button
+                                  whileHover={{ scale: 1.1 }}
+                                  whileTap={{ scale: 0.95 }}
+                                  onClick={() => {
+                                    setSelectedCandidate(app);
+                                    setShowChatModal(true);
+                                  }}
+                                  className="p-2 bg-secondary-foreground/20 text-secondary-foreground hover:bg-secondary-foreground/40 transition-colors"
+                                  title="Conversar com candidato"
+                                >
+                                  <MessageCircle className="w-4 h-4" />
+                                </motion.button>
                               </div>
                             ))}
                           </div>
@@ -471,6 +495,75 @@ export default function ContractorPage() {
       </div>
 
       <Footer />
+
+      {/* Chat Modal */}
+      {showChatModal && selectedCandidate && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+          onClick={() => setShowChatModal(false)}
+        >
+          <motion.div
+            initial={{ scale: 0.95 }}
+            animate={{ scale: 1 }}
+            onClick={(e) => e.stopPropagation()}
+            className="bg-secondary border border-white/10 p-8 max-w-md w-full"
+          >
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h3 className="font-heading text-2xl uppercase text-primary">
+                  Conversar com
+                </h3>
+                <p className="font-paragraph text-foreground/60">{selectedCandidate.candidateName}</p>
+              </div>
+              <button
+                onClick={() => setShowChatModal(false)}
+                className="text-foreground/60 hover:text-foreground transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            <div className="bg-background/50 p-4 rounded mb-6 min-h-[200px] max-h-[300px] overflow-y-auto">
+              <p className="font-paragraph text-foreground/60 text-sm text-center py-8">
+                Escreva sua mensagem para {selectedCandidate.candidateName}
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <textarea
+                value={chatMessage}
+                onChange={(e) => setChatMessage(e.target.value)}
+                placeholder="Digite sua mensagem..."
+                rows={4}
+                className="w-full bg-background border border-white/10 text-foreground px-4 py-3 font-paragraph focus:outline-none focus:border-primary transition-colors resize-none"
+              />
+
+              <div className="flex gap-4">
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={handleSendMessage}
+                  disabled={!chatMessage.trim()}
+                  className="flex-1 bg-secondary-foreground text-background font-heading uppercase py-3 tracking-wider flex items-center justify-center gap-2 hover:bg-white transition-colors disabled:opacity-50"
+                >
+                  <Send className="w-4 h-4" />
+                  Enviar
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setShowChatModal(false)}
+                  className="flex-1 bg-secondary border border-white/10 text-foreground font-heading uppercase py-3 tracking-wider hover:border-primary transition-colors"
+                >
+                  Cancelar
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
     </div>
   );
 }
