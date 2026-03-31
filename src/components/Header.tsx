@@ -1,6 +1,6 @@
 import { useAuthStore } from '@/store/authStore';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Menu, X, Zap } from 'lucide-react';
+import { BriefcaseBusiness, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -37,7 +37,7 @@ export default function Header() {
                 transition={{ duration: 2, repeat: Infinity }}
                 className="text-electric-blue"
               >
-                <Zap className="w-8 h-8" />
+                <BriefcaseBusiness className="w-8 h-8" />
               </motion.div>
               <h1 className="font-heading text-3xl md:text-4xl uppercase text-foreground tracking-wider group-hover:text-electric-blue transition-all font-black">
                 NETWORK
