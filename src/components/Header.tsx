@@ -1,8 +1,8 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useAuthStore } from '@/store/authStore';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X, Zap } from 'lucide-react';
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useAuthStore } from '@/store/authStore';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -27,7 +27,7 @@ export default function Header() {
         <div className="flex items-center justify-between">
           {/* Logo - Premium */}
           <Link to="/">
-            <motion.div 
+            <motion.div
               className="flex items-center gap-2 group"
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 300 }}
@@ -40,7 +40,7 @@ export default function Header() {
                 <Zap className="w-8 h-8" />
               </motion.div>
               <h1 className="font-heading text-3xl md:text-4xl uppercase text-foreground tracking-wider group-hover:text-electric-blue transition-all font-black">
-                JobMatch
+                NETWORK
               </h1>
             </motion.div>
           </Link>
