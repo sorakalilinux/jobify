@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, FileText, Calendar, User, ExternalLink } from 'lucide-react';
+import { Mail, Phone, FileText, Calendar, User, ExternalLink, Lock } from 'lucide-react';
 import { BaseCrudService } from '@/integrations';
 import { JobApplications } from '@/entities';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { useAuthStore } from '@/store/authStore';
+import { useNavigate } from 'react-router-dom';
 
 export default function EmpresasPage() {
+  const { isAuthenticated, userRole } = useAuthStore();
+  const navigate = useNavigate();
   const [applications, setApplications] = useState<JobApplications[]>([]);
   const [filteredApplications, setFilteredApplications] = useState<JobApplications[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -17,6 +21,15 @@ export default function EmpresasPage() {
   const [hasNext, setHasNext] = useState(false);
   const [skip, setSkip] = useState(0);
   const LIMIT = 20;
+
+  // Check if user is authenticated as contractor (empresa)
+  useEffect(() => {
+    if (!isAuthenticated || userRole !== 'contractor') {
+      navigate('/login');
+    } else {
+      setIsLoading(false);
+    }
+  }, [isAuthenticated, userRole, navigate]);
 
   const loadApplications = async (skipValue: number = 0) => {
     try {
@@ -32,14 +45,14 @@ export default function EmpresasPage() {
       setSkip(result.nextSkip || 0);
     } catch (error) {
       console.error('Error loading applications:', error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    loadApplications();
-  }, []);
+    if (isAuthenticated && userRole === 'contractor') {
+      loadApplications();
+    }
+  }, [isAuthenticated, userRole]);
 
   useEffect(() => {
     let filtered = applications;
@@ -70,6 +83,53 @@ export default function EmpresasPage() {
       return 'Data não disponível';
     }
   };
+
+  // Show loading state while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-secondary-foreground"></div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  // Show access denied if not authenticated or not a contractor
+  if (!isAuthenticated || userRole !== 'contractor') {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <section className="pt-32 pb-16 px-6 md:px-12 max-w-[100rem] mx-auto flex items-center justify-center min-h-[60vh]">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center"
+          >
+            <Lock className="w-24 h-24 text-secondary-foreground mx-auto mb-6" />
+            <h1 className="text-5xl md:text-6xl font-heading font-bold text-foreground mb-4">
+              Acesso Restrito
+            </h1>
+            <p className="text-xl font-paragraph text-surface max-w-2xl mx-auto mb-8">
+              Esta página é exclusiva para empresas. Por favor, faça login como empresa para acessar o painel de candidaturas.
+            </p>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => navigate('/login')}
+              className="bg-secondary-foreground text-background font-heading font-bold px-8 py-4 text-lg rounded-lg transition-all"
+            >
+              Ir para Login
+            </motion.button>
+          </motion.div>
+        </section>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -276,5 +336,5 @@ export default function EmpresasPage() {
 
       <Footer />
     </div>
-  );
+    );
 }
