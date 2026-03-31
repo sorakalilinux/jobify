@@ -5,8 +5,6 @@ import { BaseCrudService } from '@/integrations';
 import { JobApplications } from '@/entities';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { NetworkParticles } from '@/components/3D';
-import PageTransition from '@/components/PageTransition';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { useAuthStore } from '@/store/authStore';
@@ -134,10 +132,8 @@ export default function EmpresasPage() {
   }
 
   return (
-    <PageTransition>
-      <div className="min-h-screen bg-background overflow-hidden">
-        <NetworkParticles />
-        <Header />
+    <div className="min-h-screen bg-background">
+      <Header />
 
       {/* Hero Section */}
       <section className="pt-32 pb-16 px-6 md:px-12 max-w-[100rem] mx-auto">
@@ -339,7 +335,6 @@ export default function EmpresasPage() {
       </section>
 
       <Footer />
-      </div>
-    </PageTransition>
-  );
+    </div>
+    );
 }

@@ -6,8 +6,6 @@ import { BaseCrudService } from '@/integrations';
 import { ListagemdeVagas } from '@/entities';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { NetworkParticles } from '@/components/3D';
-import PageTransition from '@/components/PageTransition';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 
 export default function CandidatarPage() {
@@ -157,10 +155,8 @@ export default function CandidatarPage() {
   }
 
   return (
-    <PageTransition>
-      <div className="min-h-screen bg-background overflow-hidden">
-        <NetworkParticles />
-        <Header />
+    <div className="min-h-screen bg-background">
+      <Header />
 
       <div className="pt-32 pb-20 px-6 md:px-12 max-w-[100rem] mx-auto">
         <div className="min-h-[600px]">
@@ -335,7 +331,6 @@ export default function CandidatarPage() {
       </div>
 
       <Footer />
-      </div>
-    </PageTransition>
+    </div>
   );
 }
