@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { Briefcase, Users, ArrowRight, X } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { NetworkParticles } from '@/components/3D';
+import PageTransition from '@/components/PageTransition';
 import { useAuthStore } from '@/store/authStore';
 
 export default function LoginPage() {
@@ -61,8 +63,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
-      <Header />
+    <PageTransition>
+      <div className="min-h-screen bg-background text-foreground flex flex-col overflow-hidden">
+        <NetworkParticles />
+        <Header />
 
       <div className="flex-grow flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-6xl">
@@ -299,6 +303,7 @@ export default function LoginPage() {
       </div>
 
       <Footer />
-    </div>
+      </div>
+    </PageTransition>
   );
 }

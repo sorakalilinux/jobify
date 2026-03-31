@@ -4,11 +4,13 @@ import { motion } from 'framer-motion';
 import { LogOut, Briefcase, MapPin, DollarSign, Calendar, ArrowRight, Bookmark, BookmarkCheck, Trash2, MessageCircle } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { NetworkParticles } from '@/components/3D';
+import PageTransition from '@/components/PageTransition';
 import { useAuthStore } from '@/store/authStore';
 import { BaseCrudService } from '@/integrations';
 import { ListagemdeVagas, JobApplications } from '@/entities';
 import { Image } from '@/components/ui/image';
-import { DigitalSphere, GlassCard, NetworkParticles } from '@/components/3D';
+import { DigitalSphere, GlassCard } from '@/components/3D';
 
 export default function ProfessionalPage() {
   const navigate = useNavigate();
@@ -80,9 +82,10 @@ export default function ProfessionalPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col relative overflow-hidden">
-      <NetworkParticles />
-      <Header />
+    <PageTransition>
+      <div className="min-h-screen bg-background text-foreground flex flex-col relative overflow-hidden">
+        <NetworkParticles />
+        <Header />
 
       {/* Top Bar */}
       <div className="bg-secondary border-b border-white/10 px-8 py-6 relative z-20">
@@ -415,6 +418,7 @@ export default function ProfessionalPage() {
       </div>
 
       <Footer />
-    </div>
+      </div>
+    </PageTransition>
   );
 }

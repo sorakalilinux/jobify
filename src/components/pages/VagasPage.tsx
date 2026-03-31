@@ -6,6 +6,8 @@ import { BaseCrudService } from '@/integrations';
 import { ListagemdeVagas } from '@/entities';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { NetworkParticles } from '@/components/3D';
+import PageTransition from '@/components/PageTransition';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
@@ -85,8 +87,10 @@ export default function VagasPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
+    <PageTransition>
+      <div className="min-h-screen bg-background overflow-hidden">
+        <NetworkParticles />
+        <Header />
 
       {/* Hero Section */}
       <section className="pt-32 pb-16 px-6 md:px-12 max-w-[100rem] mx-auto">
@@ -305,6 +309,7 @@ export default function VagasPage() {
       </section>
 
       <Footer />
-    </div>
+      </div>
+    </PageTransition>
   );
 }

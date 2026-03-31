@@ -4,12 +4,14 @@ import { ArrowRight, Briefcase, Users, Target, Zap, Sparkles, Network, Rocket, T
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { NetworkParticles, DigitalSphere, GlassCard } from '@/components/3D';
+import PageTransition from '@/components/PageTransition';
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-background overflow-hidden">
-      <NetworkParticles />
-      <Header />
+    <PageTransition>
+      <div className="min-h-screen bg-background overflow-hidden">
+        <NetworkParticles />
+        <Header />
 
       {/* Hero Section - Immersive 3D */}
       <section className="relative pt-20 pb-32 px-6 md:px-12 max-w-[120rem] mx-auto w-full z-10">
@@ -343,6 +345,7 @@ export default function HomePage() {
       </section>
 
       <Footer />
-    </div>
+      </div>
+    </PageTransition>
   );
 }
