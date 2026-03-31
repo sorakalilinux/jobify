@@ -20,7 +20,7 @@ export default {
             },
             fontFamily: {
                 heading: ["Open Sans"],
-                paragraph: ["azeret-mono"]
+                paragraph: ["roboto", "sans-serif"]
             },
             colors: {
                 destructive: "#DF3131",
