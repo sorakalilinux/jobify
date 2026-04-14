@@ -59,9 +59,9 @@ export default function Footer() {
 
   return (
     <footer className="bg-dark-charcoal/60 backdrop-blur-xl border-t border-electric-blue/20">
-      <div className="max-w-[100rem] mx-auto px-6 md:px-12 py-16">
+      <div className="max-w-[120rem] mx-auto px-6 md:px-12 py-16 md:py-20 lg:py-24">
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16 mb-12 md:mb-16"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -71,13 +71,14 @@ export default function Footer() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            className="space-y-4"
           >
-            <Link to="/" className="flex items-center gap-2 mb-4">
-              <h3 className="text-2xl font-heading font-black bg-gradient-to-r from-electric-blue to-cyber-purple bg-clip-text text-transparent">
+            <Link to="/" className="flex items-center gap-2">
+              <h3 className="text-xl md:text-2xl font-heading font-black bg-gradient-to-r from-electric-blue to-cyber-purple bg-clip-text text-transparent">
                 TalentHub
               </h3>
             </Link>
-            <p className="font-paragraph text-surface text-sm">
+            <p className="font-paragraph text-surface text-sm leading-relaxed">
               Conectando talentos com oportunidades incríveis
             </p>
           </motion.div>
@@ -90,14 +91,15 @@ export default function Footer() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
+              className="space-y-4"
             >
-              <h4 className="font-heading font-bold text-foreground mb-4">{section.title}</h4>
-              <ul className="space-y-2">
+              <h4 className="font-heading font-bold text-foreground text-sm md:text-base tracking-wide">{section.title}</h4>
+              <ul className="space-y-3">
                 {section.links.map((link) => (
                   <li key={link.href}>
                     <Link
                       to={link.href}
-                      className="font-paragraph text-surface hover:text-electric-blue transition text-sm"
+                      className="font-paragraph text-surface hover:text-electric-blue transition-colors duration-300 text-sm"
                     >
                       {link.label}
                     </Link>
@@ -110,7 +112,7 @@ export default function Footer() {
 
         {/* Divider */}
         <motion.div
-          className="h-px bg-gradient-to-r from-transparent via-electric-blue/30 to-transparent mb-8"
+          className="h-px bg-gradient-to-r from-transparent via-electric-blue/30 to-transparent mb-8 md:mb-12"
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
@@ -119,7 +121,7 @@ export default function Footer() {
 
         {/* Bottom */}
         <motion.div
-          className="flex flex-col md:flex-row justify-between items-center gap-8"
+          className="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -128,14 +130,14 @@ export default function Footer() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="font-paragraph text-surface text-sm"
+            className="font-paragraph text-surface text-xs md:text-sm"
           >
             © {currentYear} TalentHub. Todos os direitos reservados.
           </motion.p>
 
           {/* Social Links */}
           <motion.div
-            className="flex gap-6"
+            className="flex gap-6 md:gap-8"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -149,7 +151,7 @@ export default function Footer() {
                   aria-label={social.label}
                   whileHover={{ scale: 1.2, color: '#00D9FF' }}
                   whileTap={{ scale: 0.95 }}
-                  className="text-surface hover:text-electric-blue transition"
+                  className="text-surface hover:text-electric-blue transition-colors duration-300"
                 >
                   <Icon size={20} />
                 </motion.a>

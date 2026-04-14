@@ -23,12 +23,12 @@ export default function Header() {
 
   return (
     <header className="w-full bg-background border-b border-electric-blue/20 sticky top-0 z-50 backdrop-blur-xl bg-background/80">
-      <div className="max-w-[120rem] mx-auto px-6 md:px-12 py-6">
+      <div className="max-w-[120rem] mx-auto px-6 md:px-12 py-4 md:py-6">
         <div className="flex items-center justify-between">
           {/* Logo - Premium */}
           <Link to="/">
             <motion.div 
-              className="flex items-center gap-2 group"
+              className="flex items-center gap-3 group"
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 300 }}
             >
@@ -37,21 +37,21 @@ export default function Header() {
                 transition={{ duration: 2, repeat: Infinity }}
                 className="text-electric-blue"
               >
-                <Zap className="w-8 h-8" />
+                <Zap className="w-7 h-7 md:w-8 md:h-8" />
               </motion.div>
-              <h1 className="font-heading text-3xl md:text-4xl uppercase text-foreground tracking-wider group-hover:text-electric-blue transition-all font-black">
+              <h1 className="font-heading text-2xl md:text-3xl uppercase text-foreground tracking-wider group-hover:text-electric-blue transition-all duration-300 font-black">
                 JobMatch
               </h1>
             </motion.div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-12">
+          <nav className="hidden lg:flex items-center gap-10 xl:gap-12">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 to={link.href}
-                className={`font-heading uppercase text-sm tracking-widest transition-all relative group ${
+                className={`font-heading uppercase text-xs xl:text-sm tracking-wide transition-all duration-300 relative group ${
                   isActive(link.href)
                     ? 'text-electric-blue'
                     : 'text-foreground hover:text-electric-blue'
@@ -70,7 +70,7 @@ export default function Header() {
               <>
                 <Link
                   to={userRole === 'professional' ? '/profissional' : '/contratante'}
-                  className="font-heading uppercase text-sm tracking-widest text-electric-blue"
+                  className="font-heading uppercase text-xs xl:text-sm tracking-wide text-electric-blue transition-all duration-300 hover:text-secondary-foreground"
                 >
                   {userRole === 'professional' ? 'Minha Área' : 'Minha Empresa'}
                 </Link>
@@ -81,7 +81,7 @@ export default function Header() {
                   }}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="font-heading uppercase text-sm tracking-widest text-foreground hover:text-electric-blue transition-all"
+                  className="font-heading uppercase text-xs xl:text-sm tracking-wide text-foreground hover:text-electric-blue transition-all duration-300"
                 >
                   Sair
                 </motion.button>
@@ -91,7 +91,7 @@ export default function Header() {
                 <motion.button
                   whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(0, 217, 255, 0.4)" }}
                   whileTap={{ scale: 0.95 }}
-                  className="font-heading uppercase text-sm tracking-widest bg-gradient-to-r from-electric-blue to-cyber-purple text-background px-6 py-3 hover:shadow-lg transition-all border-2 border-electric-blue font-bold rounded-lg"
+                  className="font-heading uppercase text-xs xl:text-sm tracking-wide bg-gradient-to-r from-electric-blue to-cyber-purple text-background px-6 py-2.5 md:py-3 hover:shadow-glow-md transition-all duration-300 border-2 border-electric-blue font-bold rounded-md"
                 >
                   Login
                 </motion.button>
@@ -102,12 +102,12 @@ export default function Header() {
           {/* Mobile Menu Button */}
           <motion.button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden text-electric-blue hover:text-cyber-purple transition-all"
+            className="lg:hidden text-electric-blue hover:text-cyber-purple transition-all duration-300"
             aria-label="Toggle menu"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
           >
-            {mobileMenuOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
+            {mobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
           </motion.button>
         </div>
 
@@ -127,7 +127,7 @@ export default function Header() {
                     key={link.href}
                     to={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`font-heading uppercase text-lg tracking-wide transition-all ${
+                    className={`font-heading uppercase text-sm tracking-wide transition-all duration-300 ${
                       isActive(link.href)
                         ? 'text-electric-blue'
                         : 'text-foreground hover:text-electric-blue'
@@ -141,7 +141,7 @@ export default function Header() {
                     <Link
                       to={userRole === 'professional' ? '/profissional' : '/contratante'}
                       onClick={() => setMobileMenuOpen(false)}
-                      className="font-heading uppercase text-lg tracking-wide text-electric-blue"
+                      className="font-heading uppercase text-sm tracking-wide text-electric-blue transition-all duration-300"
                     >
                       {userRole === 'professional' ? 'Minha Área' : 'Minha Empresa'}
                     </Link>
@@ -150,7 +150,7 @@ export default function Header() {
                         logout();
                         setMobileMenuOpen(false);
                       }}
-                      className="font-heading uppercase text-lg tracking-wide text-foreground hover:text-electric-blue transition-all text-left"
+                      className="font-heading uppercase text-sm tracking-wide text-foreground hover:text-electric-blue transition-all duration-300 text-left"
                     >
                       Sair
                     </button>
@@ -159,7 +159,7 @@ export default function Header() {
                   <Link
                     to="/login"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="font-heading uppercase text-lg tracking-wide bg-gradient-to-r from-electric-blue to-cyber-purple text-background px-6 py-3 hover:shadow-lg transition-all inline-block border-2 border-electric-blue font-bold rounded-lg"
+                    className="font-heading uppercase text-sm tracking-wide bg-gradient-to-r from-electric-blue to-cyber-purple text-background px-6 py-2.5 hover:shadow-glow-md transition-all duration-300 inline-block border-2 border-electric-blue font-bold rounded-md"
                   >
                     Login
                   </Link>
