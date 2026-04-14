@@ -4,9 +4,10 @@ import { motion } from 'framer-motion';
 import { LogOut, Briefcase, MapPin, DollarSign, Calendar, ArrowRight, Bookmark, BookmarkCheck, Trash2, MessageCircle } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Chat from '@/components/Chat';
 import { useAuthStore } from '@/store/authStore';
 import { BaseCrudService } from '@/integrations';
-import { ListagemdeVagas, JobApplications } from '@/entities';
+import { ListagemdeVagas, JobApplications, PerfisdeUsurios } from '@/entities';
 import { Image } from '@/components/ui/image';
 import { DigitalSphere, GlassCard, NetworkParticles } from '@/components/3D';
 
@@ -18,6 +19,8 @@ export default function ProfessionalPage() {
   const [savedJobs, setSavedJobs] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'available' | 'applications' | 'saved'>('available');
+  const [chatOpen, setChatOpen] = useState(false);
+  const [selectedChatRecipient, setSelectedChatRecipient] = useState<{ id: string; name: string } | null>(null);
 
   useEffect(() => {
     if (!isAuthenticated || userRole !== 'professional') {

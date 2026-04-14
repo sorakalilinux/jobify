@@ -4,9 +4,10 @@ import { motion } from 'framer-motion';
 import { LogOut, Plus, Eye, Trash2, Building2, Users, Edit2, X, MessageCircle, Send } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Chat from '@/components/Chat';
 import { useAuthStore } from '@/store/authStore';
 import { BaseCrudService } from '@/integrations';
-import { ListagemdeVagas, JobApplications } from '@/entities';
+import { ListagemdeVagas, JobApplications, PerfisdeUsurios } from '@/entities';
 import { Image } from '@/components/ui/image';
 import { DigitalSphere, NetworkParticles } from '@/components/3D';
 

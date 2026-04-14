@@ -56,6 +56,8 @@ export interface ListagemdeVagas {
   _createdDate?: Date;
   _updatedDate?: Date;
   /** @wixFieldType text */
+  companyReference?: string;
+  /** @wixFieldType text */
   jobTitle?: string;
   /** @wixFieldType text */
   jobDescription?: string;
@@ -71,4 +73,48 @@ export interface ListagemdeVagas {
   employmentType?: string;
   /** @wixFieldType date */
   datePosted?: Date | string;
+}
+
+
+/**
+ * Collection ID: mensagens
+ * Interface for Messages
+ */
+export interface Messages {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  senderId?: string;
+  /** @wixFieldType text */
+  recipientId?: string;
+  /** @wixFieldType text */
+  messageContent?: string;
+  /** @wixFieldType datetime */
+  sentDate?: Date | string;
+  /** @wixFieldType boolean */
+  isRead?: boolean;
+}
+
+
+/**
+ * Collection ID: userprofiles
+ * Interface for PerfisdeUsurios
+ */
+export interface PerfisdeUsurios {
+  _id: string;
+  _createdDate?: Date;
+  _updatedDate?: Date;
+  /** @wixFieldType text */
+  profileType?: string;
+  /** @wixFieldType text */
+  userName?: string;
+  /** @wixFieldType text */
+  userEmail?: string;
+  /** @wixFieldType image - Contains image URL, render with <Image> component, NOT as text */
+  companyLogo?: string;
+  /** @wixFieldType text */
+  companyDescription?: string;
+  /** @wixFieldType text */
+  contractorExperience?: string;
 }
